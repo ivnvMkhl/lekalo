@@ -25,6 +25,9 @@ func init() {
 }
 
 func detectSystemLanguage() string {
+	if lang := os.Getenv("LEKALO_LANG"); lang != "" {
+		return lang
+	}
 	if lang := os.Getenv("LC_ALL"); lang != "" {
 		return normalizeLang(lang)
 	}

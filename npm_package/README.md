@@ -37,6 +37,10 @@ npx lekalo gen <template-name> [key=value...]
 npx lekalo --help
 ```
 
+### Localization
+
+CLI automatically detects the language installed in the system. To manually redefine the language, set the system env variable `LEKALO_LANG=en`
+
 ### React Component Example
 
 1. Create a template file `.lekalo_templates.yml` placement on run folder:
