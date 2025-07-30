@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/ivnvMkhl/lekalo/config"
+	"github.com/ivnvMkhl/lekalo/locales"
 	"github.com/ivnvMkhl/lekalo/render"
 )
 
@@ -17,7 +18,7 @@ func GenerateTemplate(templateName string, userInputs map[string]string) error {
 
 	template, exists := cfg.Templates[templateName]
 	if !exists {
-		return fmt.Errorf("шаблон '%s' не найден", templateName)
+		return fmt.Errorf("%s '%s' %s", locales.T("common", "template"), templateName, locales.T("common", "not_found"))
 	}
 
 	// Собираем все параметры (дефолтные + пользовательские)
@@ -65,7 +66,7 @@ func GenerateTemplate(templateName string, userInputs map[string]string) error {
 			return err
 		}
 
-		fmt.Printf("Создан файл: %s\n", filePath)
+		fmt.Printf("%s: %s\n", locales.T("common", "file_created"), filePath)
 	}
 
 	return nil

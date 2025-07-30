@@ -132,6 +132,7 @@ Local templates take precedence over global ones.
 ├── render/             # Template rendering
 │   ├── engine.go       # Jinja2 rendering
 │   └── paths.go        # Path processing
+├── npm_package/        # NPM package files
 ├── go.mod              # Dependencies
 ├── go.sum              # Dependencies
 └── main.go             # Entry point

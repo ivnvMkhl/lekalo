@@ -1,0 +1,23 @@
+{
+    "cmd": {
+        "short": "File generator by templates"
+    },
+    "gen": {
+        "short": "Generate files from template",
+        "invalid_arg": "Invalid argument",
+        "expected_format": "Expected format",
+        "config_load_error": "Configuration load error",
+        "template": "Template",
+        "required_param_error": "Required parameter not specified",
+        "gen_error": "Generated error"
+    },
+    "list": {
+        "short": "Show list of all templates"
+    },
+    "common": {
+        "error": "Error",
+        "template": "Template",
+        "not_found": "not found",
+        "file_created": "File created"
+    }
+}
