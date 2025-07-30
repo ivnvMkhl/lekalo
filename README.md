@@ -48,6 +48,10 @@ lekalo gen <template-name> [key=value...]
 lekalo --help
 ```
 
+### Localization
+
+CLI automatically detects the language installed in the system. To manually redefine the language, set the system env variable `LEKALO_LANG=en`
+
 ### React Component Example
 
 1. Create a template file `.lekalo_templates.yml` placement on run folder:
@@ -132,6 +136,7 @@ Local templates take precedence over global ones.
 ├── render/             # Template rendering
 │   ├── engine.go       # Jinja2 rendering
 │   └── paths.go        # Path processing
+├── npm_package/        # NPM package files
 ├── go.mod              # Dependencies
 ├── go.sum              # Dependencies
 └── main.go             # Entry point

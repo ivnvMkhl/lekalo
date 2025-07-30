@@ -7,12 +7,13 @@ import (
 
 	"github.com/ivnvMkhl/lekalo/config"
 	"github.com/ivnvMkhl/lekalo/core"
+	"github.com/ivnvMkhl/lekalo/locales"
 	"github.com/spf13/cobra"
 )
 
 var gen = &cobra.Command{
 	Use:   "gen [template-name] [key=value...]",
-	Short: "Сгенерировать файлы из шаблона",
+	Short: locales.T("gen", "short"),
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		templateName := args[0]
@@ -24,7 +25,7 @@ var gen = &cobra.Command{
 			if len(parts) == 2 {
 				userInputs[parts[0]] = parts[1]
 			} else {
-				fmt.Printf("Некорректный аргумент: %s. Ожидается формат key=value\n", arg)
+				fmt.Printf("%s: %s. %s: key=value\n", locales.T("gen", "invalid_arg"), arg, locales.T("gen", "expected_format"))
 				return
 			}
 		}
@@ -32,13 +33,13 @@ var gen = &cobra.Command{
 		// Загружаем конфиг
 		cfg, err := config.LoadConfigs()
 		if err != nil {
-			fmt.Println("Ошибка загрузки конфига:", err)
+			fmt.Printf("%s: %s", locales.T("gen", "config_load_error"), err)
 			return
 		}
 
 		tpl, exists := cfg.Templates[templateName]
 		if !exists {
-			fmt.Printf("Шаблон '%s' не найден\n", templateName)
+			fmt.Printf("%s '%s' %s\n", locales.T("common", "template"), templateName, locales.T("common", "not_found"))
 			return
 		}
 
@@ -53,14 +54,14 @@ var gen = &cobra.Command{
 				} else if param.Default != "" {
 					userInputs[param.Name] = param.Default
 				} else {
-					fmt.Printf("Не указан обязательный параметр: %s\n", param.Name)
+					fmt.Printf("%s: %s\n", locales.T("gen", "required_param_error"), param.Name)
 					return
 				}
 			}
 		}
 
 		if err := core.GenerateTemplate(templateName, userInputs); err != nil {
-			fmt.Println("Ошибка генерации:", err)
+			fmt.Printf("%s: %s", locales.T("gen", "gen_error"), err)
 			os.Exit(1)
 		}
 	},
