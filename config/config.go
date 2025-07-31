@@ -20,6 +20,7 @@ type TemplateConfig struct {
 }
 
 type FileTemplate struct {
+	Mode     string `yaml:"mode"`
 	Path     string `yaml:"path"`
 	Template string `yaml:"template"`
 }
@@ -39,14 +40,12 @@ func LoadConfig(path string) (*Config, error) {
 	return &cfg, err
 }
 
-// Пути к конфигам
 const (
 	GlobalConfigDir  = "~/.lekalo"             // Глобальная папка
 	GlobalConfigFile = "lekalo_templates.yml"  // Глобальный конфиг
 	LocalConfigFile  = ".lekalo_templates.yml" // Локальный конфиг
 )
 
-// FindConfigs ищет все конфиги (глобальный + локальный)
 func FindConfigs() ([]string, error) {
 	home, err := os.UserHomeDir()
 	if err != nil {
@@ -68,7 +67,6 @@ func FindConfigs() ([]string, error) {
 	return paths, nil
 }
 
-// MergeConfigs объединяет конфиги (локальные перекрывают глобальные)
 func MergeConfigs(configs []*Config) *Config {
 	merged := &Config{Templates: make(map[string]TemplateConfig)}
 	for _, cfg := range configs {

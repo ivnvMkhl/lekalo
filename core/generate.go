@@ -52,20 +52,50 @@ func GenerateTemplate(templateName string, userInputs map[string]string) error {
 			return err
 		}
 
-		f, err := os.Open(filePath)
-		if err == nil {
-			input := UserInput(fmt.Sprintf("%s %s", filePath, locales.T("generate", "rewrite_message")))
-			if confirm := UserInputToBool(input); confirm {
-				if err := rewriteFile(filePath, content); err != nil {
+		switch file.Mode {
+		case "always_overwrite":
+			{
+				if err := overwriteFile(filePath, content); err != nil {
 					return err
 				}
 			}
-		} else {
-			if err := writeFile(filePath, content); err != nil {
-				return err
+		case "skip_if_exist":
+			{
+				f, err := os.Open(filePath)
+				if err != nil {
+					if err := writeFile(filePath, content); err != nil {
+						return err
+					}
+				} else {
+					fmt.Printf("%s: %s\n", locales.T("generate", "file_skip"), filePath)
+				}
+				f.Close()
+			}
+		case "append":
+			{
+				if err := appendToFile(filePath, content); err != nil {
+					return err
+				}
+			}
+		default:
+			{
+				f, err := os.Open(filePath)
+				if err == nil {
+					input := UserInput(fmt.Sprintf("%s %s", filePath, locales.T("generate", "rewrite_message")))
+					if confirm := UserInputToBool(input); confirm {
+						if err := overwriteFile(filePath, content); err != nil {
+							return err
+						}
+					}
+				} else {
+					if err := writeFile(filePath, content); err != nil {
+						return err
+					}
+				}
+				f.Close()
 			}
 		}
-		f.Close()
+
 	}
 
 	return nil
@@ -82,10 +112,25 @@ func writeFile(path string, content string) error {
 	return nil
 }
 
-func rewriteFile(path string, content string) error {
+func overwriteFile(path string, content string) error {
 	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
 		return err
 	}
 	fmt.Printf("%s: %s\n", locales.T("generate", "file_rewrited"), path)
+	return nil
+}
+
+func appendToFile(path string, content string) error {
+	file, err := os.OpenFile(path, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		return fmt.Errorf("%s: %w", locales.T("generate", "file_open_failed"), err)
+	}
+	defer file.Close()
+
+	if _, err := file.WriteString(content); err != nil {
+		return fmt.Errorf("%s: %w", locales.T("generate", "file_append_failed"), err)
+	}
+
+	fmt.Printf("%s: %s\n", locales.T("generate", "file_appended"), path)
 	return nil
 }

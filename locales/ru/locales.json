@@ -15,7 +15,11 @@
     },
     "generate": {
         "rewrite_message": "Файл уже существует. Заменить? (y/n) ",
-        "file_rewrited": "Файл перезаписан"
+        "file_rewrited": "Файл перезаписан",
+        "file_skip": "Генерация файла была пропущена",
+        "file_open_failed": "Ошибка открытия файла",
+        "file_append_failed": "Ошибка при дополнении записи в файл",
+        "file_appended": "Файл успешно дописан"
     },
     "common": {
         "error": "Ошибка",
