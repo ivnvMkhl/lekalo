@@ -10,7 +10,6 @@ import (
 )
 
 func GenerateTemplate(templateName string, userInputs map[string]string) error {
-	// Загружаем конфиги
 	cfg, err := config.LoadConfigs()
 	if err != nil {
 		return err
@@ -21,17 +20,15 @@ func GenerateTemplate(templateName string, userInputs map[string]string) error {
 		return fmt.Errorf("%s '%s' %s", locales.T("common", "template"), templateName, locales.T("common", "not_found"))
 	}
 
-	// Собираем все параметры (дефолтные + пользовательские)
 	params := make(map[string]interface{})
 	for _, param := range template.Params {
 		value, ok := userInputs[param.Name]
 		if !ok {
-			value = param.Default // Используем дефолтное значение
+			value = param.Default
 		}
 		params[param.Name] = value
 	}
 
-	// Создаём папки из `folders`
 	if template.Folders != nil {
 		for _, dirPath := range template.Folders {
 			resolvedPath, err := render.ResolvePath(dirPath, params)
@@ -44,30 +41,51 @@ func GenerateTemplate(templateName string, userInputs map[string]string) error {
 		}
 	}
 
-	// Генерируем файлы
 	for _, file := range template.Files {
-		// Рендерим путь
 		filePath, err := render.ResolvePath(file.Path, params)
 		if err != nil {
 			return err
 		}
 
-		// Рендерим содержимое
 		content, err := render.RenderString(file.Template, params)
 		if err != nil {
 			return err
 		}
 
-		// Создаём файл
-		if err := render.EnsureDir(filePath); err != nil {
-			return err
+		f, err := os.Open(filePath)
+		if err == nil {
+			input := UserInput(fmt.Sprintf("%s %s", filePath, locales.T("generate", "rewrite_message")))
+			if confirm := UserInputToBool(input); confirm {
+				if err := rewriteFile(filePath, content); err != nil {
+					return err
+				}
+			}
+		} else {
+			if err := writeFile(filePath, content); err != nil {
+				return err
+			}
 		}
-		if err := os.WriteFile(filePath, []byte(content), 0644); err != nil {
-			return err
-		}
-
-		fmt.Printf("%s: %s\n", locales.T("common", "file_created"), filePath)
+		f.Close()
 	}
 
+	return nil
+}
+
+func writeFile(path string, content string) error {
+	if err := render.EnsureDir(path); err != nil {
+		return err
+	}
+	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
+		return err
+	}
+	fmt.Printf("%s: %s\n", locales.T("common", "file_created"), path)
+	return nil
+}
+
+func rewriteFile(path string, content string) error {
+	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
+		return err
+	}
+	fmt.Printf("%s: %s\n", locales.T("generate", "file_rewrited"), path)
 	return nil
 }
