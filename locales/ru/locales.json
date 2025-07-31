@@ -13,6 +13,10 @@
     "list": {
         "short": "Показать список всех шаблонов"
     },
+    "generate": {
+        "rewrite_message": "Файл уже существует. Заменить? (y/n) ",
+        "file_rewrited": "Файл перезаписан"
+    },
     "common": {
         "error": "Ошибка",
         "template": "Шаблон",

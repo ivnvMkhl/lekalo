@@ -14,6 +14,10 @@
     "list": {
         "short": "Show list of all templates"
     },
+    "generate": {
+        "rewrite_message": "File alredy exist. Rewraite? (y/n) ",
+        "file_rewrited": "File rewrited"
+    },
     "common": {
         "error": "Error",
         "template": "Template",
