@@ -16,7 +16,11 @@
     },
     "generate": {
         "rewrite_message": "File alredy exist. Rewraite? (y/n) ",
-        "file_rewrited": "File rewrited"
+        "file_rewrited": "File rewrited",
+        "file_skip": "File generation has been skipped",
+        "file_open_failed": "Failed to open file",
+        "file_append_failed": "Failed to append to file",
+        "file_appended": "Content appended to file"
     },
     "common": {
         "error": "Error",

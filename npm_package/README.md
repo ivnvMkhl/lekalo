@@ -94,11 +94,19 @@ templates:
     # Files to generate
     files:
       file1:
+        mode: "default" # Generate mode
         path: "{{ folders.components }}/{{ param1 }}.tsx"  # Output path
         template: |  # File content
           // Jinja2 template with parameter substitution
           export const {{ param1 }} = () => null;
 ```
+
+### Generate mode
+
+* `default` (or unset) - When the file exists, overwrite confirmation will be required
+* `always_overwrite` - File will be overwritten (no confirmation)
+* `skip_if_exist` - File generation will be skipped if the file exists
+* `append` - The file will be appended to or created if it doesn't exist
 
 ## Template Locations
 
