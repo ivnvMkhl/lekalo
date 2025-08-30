@@ -8,7 +8,8 @@
         "expected_format": "Ожидаемый формат",
         "config_load_error": "Ошибка загрузки конфигурации",
         "required_param_error": "Обязательный параметр не обьявлен",
-        "gen_error": "Ошибка генерации"
+        "gen_error": "Ошибка генерации",
+        "multiple_prompt_append": "введите значения через запятую"
     },
     "list": {
         "short": "Показать список всех шаблонов"
@@ -19,7 +20,12 @@
         "file_skip": "Генерация файла была пропущена",
         "file_open_failed": "Ошибка открытия файла",
         "file_append_failed": "Ошибка при дополнении записи в файл",
-        "file_appended": "Файл успешно дописан"
+        "file_appended": "Файл успешно дописан",
+        "render_error": "Ошибка рендеринга шаблона",
+        "path_resolve_error": "Ошибка разрешения пути",
+        "folder_create_error": "Ошибка создания папки",
+        "file_processed_error": "Ошибка обработки файла",
+        "file_write_error": "Ошибка записи файла"
     },
     "common": {
         "error": "Ошибка",
