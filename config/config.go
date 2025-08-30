@@ -8,9 +8,10 @@ import (
 )
 
 type TemplateParam struct {
-	Name    string `yaml:"name"`
-	Prompt  string `yaml:"prompt,omitempty"`
-	Default string `yaml:"default,omitempty"`
+	Name     string      `yaml:"name"`
+	Prompt   string      `yaml:"prompt,omitempty"`
+	Multiple bool        `yaml:"multiple,omitempty"`
+	Default  interface{} `yaml:"default,omitempty"`
 }
 
 type TemplateConfig struct {
@@ -29,6 +30,26 @@ type Config struct {
 	Templates map[string]TemplateConfig `yaml:"templates"`
 }
 
+func (tp *TemplateParam) GetDefaultArray() []string {
+	if tp.Default == nil {
+		return nil
+	}
+	if arr, ok := tp.Default.([]interface{}); ok {
+		result := make([]string, len(arr))
+		for i, item := range arr {
+			if str, ok := item.(string); ok {
+				result[i] = str
+			}
+		}
+		return result
+	}
+	return nil
+}
+
+func (tp *TemplateParam) HasDefault() bool {
+	return tp.Default != nil
+}
+
 // LoadConfig загружает YAML-конфиг из файла
 func LoadConfig(path string) (*Config, error) {
 	data, err := os.ReadFile(path)
@@ -41,9 +62,9 @@ func LoadConfig(path string) (*Config, error) {
 }
 
 const (
-	GlobalConfigDir  = "~/.lekalo"             // Глобальная папка
-	GlobalConfigFile = "lekalo_templates.yml"  // Глобальный конфиг
-	LocalConfigFile  = ".lekalo_templates.yml" // Локальный конфиг
+	GlobalConfigDir  = "~/.lekalo"
+	GlobalConfigFile = "lekalo_templates.yml"
+	LocalConfigFile  = ".lekalo_templates.yml"
 )
 
 func FindConfigs() ([]string, error) {

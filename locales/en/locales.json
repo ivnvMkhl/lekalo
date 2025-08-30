@@ -9,7 +9,8 @@
         "config_load_error": "Configuration load error",
         "template": "Template",
         "required_param_error": "Required parameter not specified",
-        "gen_error": "Generated error"
+        "gen_error": "Generated error",
+        "multiple_prompt_append": "enter values separated by commas"
     },
     "list": {
         "short": "Show list of all templates"
@@ -20,7 +21,12 @@
         "file_skip": "File generation has been skipped",
         "file_open_failed": "Failed to open file",
         "file_append_failed": "Failed to append to file",
-        "file_appended": "Content appended to file"
+        "file_appended": "Content appended to file",
+        "render_error": "Template render error",
+        "path_resolve_error": "Path resolve error",
+        "folder_create_error": "Folder creation error",
+        "file_processed_error": "File processed error",
+        "file_write_error": "File write error"
     },
     "common": {
         "error": "Error",
