@@ -31,7 +31,7 @@ Lekalo is a Go-based command-line utility for generating files and project struc
 
 ### Download Binaries
 
-Pre-built binaries for various platforms are available in [project releases](https://github.com/ivnvMkhl/lekalo/tree/master/build_bin).
+Pre-built binaries for various platforms are available in [buil binares](https://github.com/ivnvMkhl/lekalo/tree/master/build_bin).
 
 ## Usage
 
