@@ -95,7 +95,14 @@ templates:
     params:
       - name: "param1"          # Parameter name
         prompt: "Prompt text"   # Prompt text (optional)
+        multiple: false         # Multiple mode (optional default false)
         default: "default"      # Default value (optional)
+      - name: "param2"          # Parameter name
+        prompt: "Prompt text"   # Prompt text (optional)
+        multiple: true          # Multiple mode
+        default:                # Default values (optional)
+            - "default"         # Default value 1
+            - "default2"        # Default value 2
 
     # Dynamically created folders (optional)
     folders:
